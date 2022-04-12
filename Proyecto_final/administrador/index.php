@@ -1,10 +1,16 @@
 <?php
 
 session_start();
+$enlace= mysqli_connect( "localhost","root","");
+mysqli_select_db($enlace,"datos");
+
+$usuariosSQL=mysqli_query($enlace,"SELECT * FROM usuario");
+
+while ($usuario=mysqli_fetch_assoc($usuariosSQL))
 
     if($_POST){
 
-        if(($_POST['usuario']=="develoteca") and ($_POST['contrasenia']=="sistema")){
+        if(($_POST['usuario']== $usuario['nombre']) and ($_POST['contrasenia']==$usuario['password'])){
             $_SESSION['usuario']=="ok";
             $_SESSION['nombreUsuario']=="Develoteca";
             header('Location:../administrador/inicio.php');
@@ -50,8 +56,8 @@ session_start();
                   </div>
 
                   <?php } ?>
-                      
-                    <form method="POST"> 
+
+                    <form id="form1"  method="post" class="needs-validation" novalidate>    
                     <div class = "form-group">
                     <label >Usuario</label>
                     <input type="text" class="form-control" name="usuario" placeholder="Escribe tu usuario">
@@ -65,6 +71,7 @@ session_start();
 
                     
                     <button type="submit" class="btn btn-primary">Entrar</button>
+                    
                     </form>
                     
                     
